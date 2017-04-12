@@ -1,0 +1,5 @@
+fluentd_use_ssl: false
+fluentd_shared_key: reivingee8deim6Iache
+
+elasticsearch_cluster_name: elasticsearch
+elasticsearch_port: 9200

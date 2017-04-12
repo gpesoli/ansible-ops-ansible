@@ -1,0 +1,35 @@
+---
+- name: Install kibana configuration for Apache
+  template:
+    src: kibana.conf.j2
+    dest: '{{ kibana_httpd_conf }}'
+  notify: restart httpd
+
+- name: Create kibana htpasswd file
+  tags:
+    - skip_ansible_lint  # ignore ANSIBLE0012
+  command: >
+    htpasswd -cb {{ kibana_proxy_htpasswd }} {{ kibana_proxy_user }}
+    {{ kibana_proxy_pass }}
+  notify: restart httpd
+
+- name: Secure htpasswd file
+  file:
+    path: '{{ kibana_proxy_htpasswd }}'
+    owner: apache
+    group: apache
+    mode: 0640
+
+- name: Configure default redirect
+  copy:
+    content: |
+      RewriteRule ^/$ {{ kibana_path }} [R=302]
+    dest: '{{ opstools_default_redirect_file }}'
+    force: false
+  notify: restart httpd
+
+- name: Create appropriate firewall rules
+  include_role:
+    name: firewall/commit
+  vars:
+    firewall_rules: kibana_hosts

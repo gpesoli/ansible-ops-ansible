@@ -1,0 +1,10 @@
+cluster.name: {{ elasticsearch_cluster_name }}
+node.name: {{ ansible_hostname }}
+discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.unicast.hosts: ["ops-logging-1", "ops-logging-2"]
+http.cors.enabled: true
+http.cors.allow-origin: '/.*/'
+network.host:
+- 127.0.0.1
+- {{ ansible_eth0.ipv4.address }}
+http.port: {{ elasticsearch_port }}

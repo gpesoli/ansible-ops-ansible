@@ -1,0 +1,18 @@
+ops-logging-1 ansible_user=root ansible_become=true
+ops-logging-2 ansible_user=root ansible_become=true
+
+[logging_hosts]
+ops-logging-1
+ops-logging-2
+
+[fluent_hosts]
+ops-logging-1
+ops-logging-2
+
+[elastic_hosts]
+ops-logging-1
+ops-logging-2
+
+[kibana_hosts]
+ops-logging-1
+ops-logging-2

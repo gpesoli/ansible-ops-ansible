@@ -1,0 +1,6 @@
+
+sts: all
+  become: yes
+  vars:
+   item: "{{ ansible_distribution_major_version }}"
+
